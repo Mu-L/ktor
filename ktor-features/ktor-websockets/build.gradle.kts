@@ -7,11 +7,12 @@ kotlin.sourceSets {
 
         val jvmTest by getting {
             dependencies {
+                api(project(":ktor-features:ktor-content-negotiation"))
                 api(project(":ktor-server:ktor-server-jetty"))
                 api(project(":ktor-server:ktor-server-netty"))
                 api(project(":ktor-server:ktor-server-tomcat"))
                 api(project(":ktor-server:ktor-server-cio"))
-                api(project(":ktor-server:ktor-server-core", configuration = "testOutput"))
+                api(project(":ktor-server:ktor-server", configuration = "testOutput"))
             }
         }
     }

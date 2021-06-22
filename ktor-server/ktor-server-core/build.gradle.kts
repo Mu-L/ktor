@@ -1,27 +1,26 @@
 description = ""
 
-val typesafe_config_version: String by extra
-val kotlin_version: String by extra
-val mockk_version: String by extra
-
 kotlin.sourceSets {
     val jvmMain by getting {
         dependencies {
-            api(project(":ktor-utils"))
-            api(project(":ktor-http"))
-            api(project(":ktor-shared:ktor-shared-serialization"))
-            api(project(":ktor-shared:ktor-shared-events"))
-
-            api("com.typesafe:config:$typesafe_config_version")
-            api("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
-        }
-    }
-    val jvmTest by getting {
-        dependencies {
-            api(project(":ktor-http:ktor-http-cio"))
-            api(project(":ktor-network"))
-            api(project(":ktor-server:ktor-server-test-host"))
-            implementation("io.mockk:mockk:$mockk_version")
+            api(project(":ktor-server:ktor-server"))
+            api(project(":ktor-features:ktor-auto-head-response"))
+            api(project(":ktor-features:ktor-caching-headers"))
+            api(project(":ktor-features:ktor-call-id"))
+            api(project(":ktor-features:ktor-call-logging"))
+            api(project(":ktor-features:ktor-compression"))
+            api(project(":ktor-features:ktor-conditional-headers"))
+            api(project(":ktor-features:ktor-content-negotiation"))
+            api(project(":ktor-features:ktor-cors"))
+            api(project(":ktor-features:ktor-data-conversion"))
+            api(project(":ktor-features:ktor-default-headers"))
+            api(project(":ktor-features:ktor-double-receive"))
+            api(project(":ktor-features:ktor-forwarded-header"))
+            api(project(":ktor-features:ktor-hsts"))
+            api(project(":ktor-features:ktor-http-redirect"))
+            api(project(":ktor-features:ktor-partial-content"))
+            api(project(":ktor-features:ktor-sessions"))
+            api(project(":ktor-features:ktor-status-pages"))
         }
     }
 }

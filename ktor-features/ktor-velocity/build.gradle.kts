@@ -10,5 +10,11 @@ kotlin {
                 api("org.apache.velocity.tools:velocity-tools-generic:3.1")
             }
         }
+        val jvmTest by getting {
+            dependencies {
+                api(project(":ktor-features:ktor-conditional-headers"))
+                api(project(":ktor-features:ktor-compression"))
+            }
+        }
     }
 }

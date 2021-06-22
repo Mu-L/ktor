@@ -8,6 +8,7 @@ kotlin {
     sourceSets {
         val jvmMain by getting {
             dependencies {
+                api(project(":ktor-features:ktor-sessions"))
                 api(project(":ktor-client:ktor-client-core"))
                 api("com.googlecode.json-simple:json-simple:1.1.1") {
                     isTransitive = false

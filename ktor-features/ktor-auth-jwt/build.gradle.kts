@@ -7,7 +7,6 @@ kotlin.sourceSets {
     val jvmMain by getting {
         dependencies {
             api(project(":ktor-features:ktor-auth"))
-            api("com.googlecode.json-simple:json-simple:$json_simple_version")
             api("com.auth0:java-jwt:$java_jwt_version")
             api("com.auth0:jwks-rsa:$jwks_rsa_version")
         }

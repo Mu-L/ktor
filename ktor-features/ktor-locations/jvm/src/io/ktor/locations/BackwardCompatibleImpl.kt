@@ -8,7 +8,8 @@ import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.routing.*
-import io.ktor.util.*
+import io.ktor.util.converters.*
+import io.ktor.util.reflect.*
 import java.lang.reflect.*
 import java.util.*
 import kotlin.reflect.*
@@ -121,11 +122,13 @@ internal class BackwardCompatibleImpl(
         val parameters = constructor.parameters
         val arguments = parameters.map { parameter ->
             val parameterType = parameter.type
+            val parameterTypeInfo =
+                TypeInfo(parameterType.classifier as KClass<*>, parameterType.javaType, parameterType)
             val parameterName = parameter.name ?: getParameterNameFromAnnotation(parameter)
             val value: Any? = if (parent != null && parameterType == parent.klass.starProjectedType) {
                 parent.create(allParameters)
             } else {
-                createFromParameters(allParameters, parameterName, parameterType.javaType, parameter.isOptional)
+                createFromParameters(allParameters, parameterName, parameterTypeInfo, parameter.isOptional)
             }
             parameter to value
         }.filterNot { it.first.isOptional && it.second == null }.toMap()
@@ -137,7 +140,7 @@ internal class BackwardCompatibleImpl(
         }
     }
 
-    private fun createFromParameters(parameters: Parameters, name: String, type: Type, optional: Boolean): Any? {
+    private fun createFromParameters(parameters: Parameters, name: String, type: TypeInfo, optional: Boolean): Any? {
         return when (val values = parameters.getAll(name)) {
             null -> when {
                 !optional -> {
@@ -147,7 +150,7 @@ internal class BackwardCompatibleImpl(
             }
             else -> {
                 try {
-                    conversionService.fromValues(values, type)
+                    conversionService.fromValues(values, type) ?: emptyList<Unit>()
                 } catch (cause: Throwable) {
                     throw ParameterConversionException(name, type.toString(), cause)
                 }

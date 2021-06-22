@@ -9,6 +9,7 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
+                api(project(":ktor-features:ktor-conditional-headers"))
                 api("org.webjars:jquery:3.3.1")
             }
         }

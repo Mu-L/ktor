@@ -77,17 +77,13 @@ class CustomLocationsTest {
         application.install(Locations)
         application.install(DataConversion) {
             convert<EntityID> {
-                decode { values, _ ->
+                decode { values ->
                     val (typeId, entityId) = values.single().split('-').map { it.toInt() }
                     EntityID(typeId, entityId)
                 }
 
                 encode { value ->
-                    when (value) {
-                        null -> listOf()
-                        is EntityID -> listOf("${value.typeId}-${value.entityId}")
-                        else -> throw DataConversionException("Cannot convert $value as EntityID")
-                    }
+                    listOf("${value.typeId}-${value.entityId}")
                 }
             }
         }

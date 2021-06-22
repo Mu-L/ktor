@@ -6,4 +6,9 @@ kotlin.sourceSets {
             api("org.jetbrains.kotlinx:kotlinx-html-jvm:$kotlinx_html_version")
         }
     }
+    val jvmTest by getting {
+        dependencies {
+            api(project(":ktor-features:ktor-status-pages"))
+        }
+    }
 }
